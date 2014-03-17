@@ -14,6 +14,8 @@ class BookmarkWriter(outline: Outline) {
 
     outline.topLevelBookmarks.foreach { b => pdOutline.appendChild(pdBookmark(b)) }
     pdOutline.openNode
+
+    document.getDocumentCatalog.setDocumentOutline(pdOutline)
   }
 
   private def pdBookmark(bookmark: Bookmark): PDOutlineItem = {
@@ -41,12 +43,17 @@ class BookmarkWriter(outline: Outline) {
       action
   }
 
-  private def pdDestination(bookmark: InternalBookmark) = bookmark.zoom match {
-    case ZoomFitWidth     => new PDPageFitWidthDestination
-    case ZoomFitHeight    => new PDPageFitHeightDestination
-    case ZoomFitRectangle => new PDPageFitRectangleDestination
-    case ZoomFitPage      => new PDPageFitDestination
-    case ZoomAbsolute     => new PDPageXYZDestination
-    case _                => new PDPageFitWidthDestination
+  private def pdDestination(bookmark: InternalBookmark) = {
+    val destination = bookmark.zoom match {
+      case ZoomFitWidth     => new PDPageFitWidthDestination
+      case ZoomFitHeight    => new PDPageFitHeightDestination
+      case ZoomFitRectangle => new PDPageFitRectangleDestination
+      case ZoomFitPage      => new PDPageFitDestination
+      case ZoomAbsolute     => new PDPageXYZDestination
+      case _                => new PDPageFitWidthDestination
+    }
+
+    destination.setPageNumber(bookmark.page - 1)
+    destination
   }
 }

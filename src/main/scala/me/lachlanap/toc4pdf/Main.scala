@@ -7,15 +7,29 @@ import org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDOutlin
 
 object Main {
   def main(args: Array[String]) = {
-    val document = PDDocument.load("test2.pdf")
+    val contents = Contents(List(
+      Document("1942", "test2.pdf"),
+      Document("1943", "test1.pdf")))
+    process(contents)
+  }
 
-    val outline = new BookmarkParser(document).bookmarks
-    print(outline)
+  private def process(contents: Contents) = {
+    contents.documents.foreach { thisDoc =>
+      val document = PDDocument.load(thisDoc.file)
+      val oldOutline = new BookmarkParser(document).bookmarks
+      //print(oldOutline)
 
-    new BookmarkWriter(outline).write(document)
+      val newOutline = Outline(contents.documents.map { aDoc =>
+        if (aDoc == thisDoc) {
+          InternalBookmark(aDoc.title, oldOutline.topLevelBookmarks, 1, ZoomFitWidth)
+        } else
+          ExternalBookmark(aDoc.title, List(), aDoc.file)
+      })
 
-    document.save("test2-out.pdf")
-    document.close()
+      new BookmarkWriter(newOutline).write(document)
+      document.save(thisDoc.file + ".out.pdf")
+      document.close
+    }
   }
 
   private def print(outline: Outline): Unit = {
@@ -28,7 +42,7 @@ object Main {
         println(" " * depth + "E " + name + " => " + destination)
       }
       case InternalBookmark(name, children, page, zoom) => {
-        println(" " * depth + "I " + name + " (" + zoom.name + ")")
+        println(" " * depth + "I " + name + " => " + page + " (" + zoom.name + ")")
       }
     }
 
