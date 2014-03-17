@@ -1,4 +1,3 @@
-
 package me.lachlanap.toc4pdf
 
 import org.apache.pdfbox.pdmodel.PDDocument

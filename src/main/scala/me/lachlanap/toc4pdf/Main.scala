@@ -12,6 +12,9 @@ object Main {
     val outline = new BookmarkParser(document).bookmarks
     print(outline)
 
+    new BookmarkWriter(outline).write(document)
+
+    document.save("test2-out.pdf")
     document.close()
   }
 
