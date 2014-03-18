@@ -10,26 +10,11 @@ object Main {
     val contents = Contents(List(
       Document("1942", "test2.pdf"),
       Document("1943", "test1.pdf")))
-    process(contents)
-  }
+    val config = GeneratorConfig(
+      keepOldBookmarks = true,
+      forceZoom = ZoomFitWidth)
 
-  private def process(contents: Contents) = {
-    contents.documents.foreach { thisDoc =>
-      val document = PDDocument.load(thisDoc.file)
-      val oldOutline = new BookmarkParser(document).bookmarks
-      //print(oldOutline)
-
-      val newOutline = Outline(contents.documents.map { aDoc =>
-        if (aDoc == thisDoc) {
-          InternalBookmark(aDoc.title, oldOutline.topLevelBookmarks, 1, ZoomFitWidth)
-        } else
-          ExternalBookmark(aDoc.title, List(), aDoc.file)
-      })
-
-      new BookmarkWriter(newOutline).write(document)
-      document.save(thisDoc.file + ".out.pdf")
-      document.close
-    }
+    new ContentsGenerator(contents, config).process
   }
 
   private def print(outline: Outline): Unit = {

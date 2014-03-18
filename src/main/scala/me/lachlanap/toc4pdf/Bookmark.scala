@@ -1,6 +1,15 @@
 package me.lachlanap.toc4pdf
 
-case class Outline(topLevelBookmarks: Seq[Bookmark])
+case class Outline(topLevelBookmarks: Seq[Bookmark]) {
+  def map(func: (Bookmark, Seq[Bookmark]) => Bookmark): Outline =
+    Outline(multiMap(topLevelBookmarks, func))
+
+  private def multiMap(bookmarks: Seq[Bookmark], func: (Bookmark, Seq[Bookmark]) => Bookmark): Seq[Bookmark] =
+    bookmarks.map(singleMap(_, func))
+
+  private def singleMap(bookmark: Bookmark, func: (Bookmark, Seq[Bookmark]) => Bookmark): Bookmark =
+    func(bookmark, multiMap(bookmark.children, func))
+}
 
 sealed abstract class Bookmark(val name: String,
                                val children: Seq[Bookmark])

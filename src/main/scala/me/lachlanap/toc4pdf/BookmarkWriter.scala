@@ -36,6 +36,7 @@ class BookmarkWriter(outline: Outline) {
       val fileSpec = new PDSimpleFileSpecification
       fileSpec.setFile(external.destination)
       action.setFile(fileSpec)
+      action.setOpenInNewWindow(false)
       action
     case internal: InternalBookmark =>
       val action = new PDActionGoTo
