@@ -1,4 +1,4 @@
-package me.lachlanap.toc4pdf
+package me.lachlanap.toc4pdf.model
 
 case class Contents(documents: Seq[Document])
 

@@ -1,9 +1,11 @@
-package me.lachlanap.toc4pdf
+package me.lachlanap.toc4pdf.proc
 
 import org.apache.pdfbox.pdmodel.PDDocument
 import org.apache.pdfbox.pdmodel.interactive.action.`type`._
 import org.apache.pdfbox.pdmodel.interactive.documentnavigation.destination._
 import org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDOutlineItem
+
+import me.lachlanap.toc4pdf.model._
 
 class BookmarkParser(document: PDDocument) {
   def bookmarks: Outline = {

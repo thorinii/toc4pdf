@@ -1,9 +1,7 @@
 package me.lachlanap.toc4pdf
 
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.interactive.action.`type`._
-import org.apache.pdfbox.pdmodel.interactive.documentnavigation.destination._;
-import org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDOutlineItem;
+import me.lachlanap.toc4pdf.model._
+import me.lachlanap.toc4pdf.proc._
 
 object Main {
   def main(args: Array[String]) = {

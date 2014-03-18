@@ -1,5 +1,8 @@
-package me.lachlanap.toc4pdf
+package me.lachlanap.toc4pdf.proc
+
 import org.apache.pdfbox.pdmodel.PDDocument
+
+import me.lachlanap.toc4pdf.model._
 
 case class GeneratorConfig(
   keepOldBookmarks: Boolean = true,

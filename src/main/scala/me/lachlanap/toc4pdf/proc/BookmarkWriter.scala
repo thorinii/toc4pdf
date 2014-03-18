@@ -1,12 +1,12 @@
-package me.lachlanap.toc4pdf
+package me.lachlanap.toc4pdf.proc
 
 import org.apache.pdfbox.pdmodel.PDDocument
 import org.apache.pdfbox.pdmodel.common.filespecification.PDSimpleFileSpecification
-import org.apache.pdfbox.pdmodel.interactive.action.`type`.PDActionLaunch
-import org.apache.pdfbox.pdmodel.interactive.action.`type`.PDActionGoTo
+import org.apache.pdfbox.pdmodel.interactive.action.`type`._
 import org.apache.pdfbox.pdmodel.interactive.documentnavigation.destination._
-import org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDDocumentOutline
-import org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline.PDOutlineItem
+import org.apache.pdfbox.pdmodel.interactive.documentnavigation.outline._
+
+import me.lachlanap.toc4pdf.model._
 
 class BookmarkWriter(outline: Outline) {
   def write(document: PDDocument) = {

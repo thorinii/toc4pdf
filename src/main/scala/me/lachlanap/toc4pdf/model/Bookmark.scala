@@ -1,4 +1,4 @@
-package me.lachlanap.toc4pdf
+package me.lachlanap.toc4pdf.model
 
 case class Outline(topLevelBookmarks: Seq[Bookmark]) {
   def map(func: (Bookmark, Seq[Bookmark]) => Bookmark): Outline =
