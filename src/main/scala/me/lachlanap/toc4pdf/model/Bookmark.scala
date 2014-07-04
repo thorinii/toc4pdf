@@ -25,7 +25,13 @@ case class InternalBookmark(override val name: String,
                             zoom: Zoom)
   extends Bookmark(name, children)
 
-sealed abstract class Zoom(val name: String)
+sealed abstract class Zoom(val name: String) {
+  final override def toString = name
+}
+
+object Zoom {
+  val AutoZooms = List(ZoomFitWidth, ZoomFitHeight, ZoomFitPage)
+}
 
 case object ZoomFitWidth extends Zoom("Fit Width")
 case object ZoomFitHeight extends Zoom("Fit Height")
